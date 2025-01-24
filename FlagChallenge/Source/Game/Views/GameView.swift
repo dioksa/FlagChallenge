@@ -22,11 +22,13 @@ struct GameView: View {
                 })
             } else {
                 Text("What country do you think this flag belongs to?")
+                    .font(FontStyle.regularLobster.font(size: .h24))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.bottom, 24)
                 
                 Text(viewModel.flag)
                     .font(.system(size: 100))
-                    .padding(.bottom, 24)
                 
                 ForEach(viewModel.options, id: \.self) { option in
                     Button(action: {
@@ -37,9 +39,9 @@ struct GameView: View {
                         }
                     }) {
                         Text(option)
-                            .font(.headline)
+                            .font(FontStyle.medium.font(size: .h20))
                             .frame(width: 180, height: 52)
-                            .background(Color.blue)
+                            .background(Color.eucalyptus)
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }

@@ -11,18 +11,21 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Welcome to our amazing game!")
-                    .font(.title)
-                    .padding([.top, .leading, .trailing], 24)
+                Text("Welcome \nto our amazing \n game!")
+                    .font(FontStyle.regularLobster.font(size: .h48))
+                    .padding(.top, 48)
+                    .padding([.leading, .trailing], 24)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Please click the button bellow to start")
+                    .font(FontStyle.regular.font(size: .h24))
+                    .padding(.top, 24)
+                    .padding([.leading, .trailing], 24)
+                    .multilineTextAlignment(.center)
                 Spacer()
 
                 NavigationLink(destination: GameView()) {
-                    Text("Start".uppercased())
-                        .font(.headline)
-                        .frame(width: 180, height: 52)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    CustomButtonStyle(title: "Start")
                 }
                 .padding(.bottom, 24)
 
