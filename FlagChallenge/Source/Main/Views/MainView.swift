@@ -19,7 +19,7 @@ struct MainView: View {
                 NavigationLink(destination: GameView()) {
                     Text("Start".uppercased())
                         .font(.headline)
-                        .padding()
+                        .frame(width: 180, height: 52)
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(10)

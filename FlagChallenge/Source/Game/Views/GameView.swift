@@ -27,7 +27,7 @@ struct GameView: View {
                     }) {
                         Text(option)
                             .font(.headline)
-                            .frame(width: 150, height: 52)
+                            .frame(width: 180, height: 52)
                             .background(Color.blue)
                             .foregroundColor(.white)
                             .cornerRadius(10)
