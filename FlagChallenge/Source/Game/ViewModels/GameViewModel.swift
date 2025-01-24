@@ -7,10 +7,25 @@
 
 import SwiftUI
 
+enum AnswerResult {
+    case success
+    case failure
+    
+    var messageDescription: String {
+        switch self {
+            case .success:
+                return "Success! Well done!"
+            case .failure:
+                return "It's wrong :( You can do better, let's go"
+        }
+    }
+}
+
 final class GameViewModel: ObservableObject {
-    @Published var flag: String = ""
+    @Published var flag = ""
     @Published var options: [String] = []
-    @Published var isGameFinished: Bool = false
+    @Published var isGameFinished = false
+    @Published var answerResult: AnswerResult?
     
     private var countriesData: [(name: String, flag: String)] = []
     private var questionCount = 0
@@ -22,12 +37,8 @@ final class GameViewModel: ObservableObject {
     }
 
     func checkAnswer(selectedOption: String) {
-        if selectedOption == correctAnswer {
-            print("Correct!")
-        } else {
-            print("Wrong answer!")
-        }
-        
+        answerResult = selectedOption == correctAnswer ? .success : .failure
+
         questionCount += 1
 
         if questionCount >= 5 {

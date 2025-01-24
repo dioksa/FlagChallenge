@@ -10,6 +10,7 @@ import SwiftUI
 
 struct GameView: View {
     @StateObject private var viewModel = GameViewModel()
+    @State private var showAlert = false
     
     var body: some View {
         NavigationStack {
@@ -24,6 +25,7 @@ struct GameView: View {
                 ForEach(viewModel.options, id: \.self) { option in
                     Button(action: {
                         viewModel.checkAnswer(selectedOption: option)
+                        showAlert = true
                     }) {
                         Text(option)
                             .font(.headline)
@@ -39,6 +41,7 @@ struct GameView: View {
                 NextScreen()
             }
         }
+        .toast(isPresented: $showAlert, message: viewModel.answerResult?.messageDescription)
     }
 }
 
