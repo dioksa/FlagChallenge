@@ -11,7 +11,8 @@ struct GameView: View {
     @StateObject private var viewModel = GameViewModel()
     @State private var showAlert = false
     @State private var isGameFinished = false
-
+    @State private var isButtonDisabled = false
+    
     var body: some View {
         VStack {
             if isGameFinished {
@@ -32,10 +33,9 @@ struct GameView: View {
                 
                 ForEach(viewModel.options, id: \.self) { option in
                     Button(action: {
-                        viewModel.checkAnswer(selectedOption: option)
-                        showAlert = true
-                        if viewModel.isGameFinished {
-                            isGameFinished = true
+                        if !isButtonDisabled {
+                            viewModel.checkAnswer(selectedOption: option)
+                            showAlert = true
                         }
                     }) {
                         Text(option)
@@ -46,10 +46,20 @@ struct GameView: View {
                             .cornerRadius(10)
                     }
                     .padding(.bottom, 12)
+                    .disabled(isButtonDisabled)
+                    .opacity(isButtonDisabled ? 0.5 : 1.0)
+                }
+                
+            }
+        }
+        .toast(isPresented: $showAlert, message: viewModel.answerResult?.messageDescription, isButtonDisabled: $isButtonDisabled)
+        .onChange(of: showAlert) { _, newValue in
+            if !newValue {
+                if viewModel.isGameFinished {
+                    isGameFinished = true
                 }
             }
         }
-        .toast(isPresented: $showAlert, message: viewModel.answerResult?.messageDescription)
     }
 }
 

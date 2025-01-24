@@ -60,6 +60,8 @@ final class GameViewModel: ObservableObject {
         countriesData.removeAll()
         isGameFinished = false
         questionCount = 0
+        correctAnswersCount = 0
+        wrongAnswersCount = 0
         correctAnswer = ""
         loadCountriesData()
         generateQuestion()
