@@ -8,21 +8,25 @@
 import SwiftUI
 
 extension View {
-    func toast(isPresented: Binding<Bool>, message: String?) -> some View {
+    func toast(isPresented: Binding<Bool>, message: String?, isButtonDisabled: Binding<Bool>) -> some View {
         ZStack {
             self
             if isPresented.wrappedValue, let message = message {
                 VStack {
                     Spacer()
                     Text(message)
+                        .font(FontStyle.regular.font(size: .h18))
                         .padding()
-                        .background(Color.black.opacity(0.8))
-                        .foregroundColor(.white)
+                        .background(Color.orange.opacity(0.4))
+                        .foregroundColor(.black)
                         .cornerRadius(10)
                         .padding(.bottom, 24)
                         .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            isButtonDisabled.wrappedValue = true
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                 isPresented.wrappedValue = false
+                                isButtonDisabled.wrappedValue = false
                             }
                         }
                 }
