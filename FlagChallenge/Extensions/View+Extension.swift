@@ -19,7 +19,7 @@ extension View {
                         .background(Color.black.opacity(0.8))
                         .foregroundColor(.white)
                         .cornerRadius(10)
-                        .padding(.bottom, 40)
+                        .padding(.bottom, 24)
                         .onAppear {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 isPresented.wrappedValue = false
