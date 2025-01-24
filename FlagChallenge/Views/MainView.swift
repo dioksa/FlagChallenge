@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct MainView: View {
     var body: some View {
@@ -17,7 +16,7 @@ struct MainView: View {
                     .padding([.top, .leading, .trailing], 24)
                 Spacer()
 
-                NavigationLink(destination: NextScreen()) {
+                NavigationLink(destination: GameView()) {
                     Text("Start".uppercased())
                         .font(.headline)
                         .padding()
@@ -33,15 +32,6 @@ struct MainView: View {
             }
             .frame(maxHeight: .infinity)
         }
-    }
-}
-
-
-struct NextScreen: View {
-    var body: some View {
-        Text("You are now on the next screen!")
-            .font(.largeTitle)
-            .padding()
     }
 }
 
