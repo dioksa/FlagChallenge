@@ -26,6 +26,8 @@ final class GameViewModel: ObservableObject {
     @Published var options: [String] = []
     @Published var isGameFinished = false
     @Published var answerResult: AnswerResult?
+    @Published var correctAnswersCount = 0
+    @Published var wrongAnswersCount = 0
     
     private var countriesData: [(name: String, flag: String)] = []
     private var questionCount = 0
@@ -35,17 +37,32 @@ final class GameViewModel: ObservableObject {
         loadCountriesData()
         generateQuestion()
     }
-
+    
     func checkAnswer(selectedOption: String) {
-        answerResult = selectedOption == correctAnswer ? .success : .failure
-
+        if selectedOption == correctAnswer {
+            answerResult = .success
+            correctAnswersCount += 1
+        } else {
+            answerResult = .failure
+            wrongAnswersCount += 1
+        }
+        
         questionCount += 1
-
+        
         if questionCount >= 5 {
             isGameFinished = true
         } else {
             generateQuestion()
         }
+    }
+    
+    func resetGame() {
+        countriesData.removeAll()
+        isGameFinished = false
+        questionCount = 0
+        correctAnswer = ""
+        loadCountriesData()
+        generateQuestion()
     }
     
     private func loadCountriesData() {

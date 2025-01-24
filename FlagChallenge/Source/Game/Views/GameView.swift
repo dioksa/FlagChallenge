@@ -1,20 +1,26 @@
-////
-////  GameView.swift
-////  FlagChallenge
-////
-////  Created by Oksana Dionisieva on 24.01.2025.
-////
-///
+//
+//  GameView.swift
+//  FlagChallenge
+//
+//  Created by Oksana Dionisieva on 24.01.2025.
+//
 
 import SwiftUI
 
 struct GameView: View {
     @StateObject private var viewModel = GameViewModel()
     @State private var showAlert = false
-    
+    @State private var isGameFinished = false
+
     var body: some View {
-        NavigationStack {
-            VStack {
+        VStack {
+            if isGameFinished {
+                FinishView(correctAnswers: viewModel.correctAnswersCount,
+                           wrongAnswers: viewModel.wrongAnswersCount, restartGame: {
+                    viewModel.resetGame()
+                    isGameFinished = false
+                })
+            } else {
                 Text("What country do you think this flag belongs to?")
                     .padding(.bottom, 24)
                 
@@ -26,6 +32,9 @@ struct GameView: View {
                     Button(action: {
                         viewModel.checkAnswer(selectedOption: option)
                         showAlert = true
+                        if viewModel.isGameFinished {
+                            isGameFinished = true
+                        }
                     }) {
                         Text(option)
                             .font(.headline)
@@ -37,21 +46,8 @@ struct GameView: View {
                     .padding(.bottom, 12)
                 }
             }
-            .navigationDestination(isPresented: $viewModel.isGameFinished) {
-                NextScreen()
-            }
         }
         .toast(isPresented: $showAlert, message: viewModel.answerResult?.messageDescription)
-    }
-}
-
-struct NextScreen: View {
-    var body: some View {
-        VStack {
-            Text("You've completed the game!")
-                .font(.title)
-                .padding()
-        }
     }
 }
 
